@@ -1,4 +1,4 @@
-import emptyImage from './empty.svg';
+import emptyImage from './assets/img/empty.svg';
 
 export const NoContent = () => (
     <div className="mx-auto">

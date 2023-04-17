@@ -1,5 +1,6 @@
 import logo from '../../assets/logo.png';
 import { NoContent } from './NoContent';
+import { TaskList } from './TaskList';
 
 export const Challenge = () => {
     return (
@@ -23,7 +24,8 @@ export const Challenge = () => {
                             <p className='text-[#8284FA]'>Concluídas <span className='text-white rounded-full bg-[#808080] p-1' >0</span></p>
                         </aside>
                     </div>
-                    <NoContent />
+                    {/* <NoContent /> */}
+                    <TaskList />
                 </section>
             </div>
         </>
