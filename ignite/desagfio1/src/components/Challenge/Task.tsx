@@ -44,7 +44,7 @@ export const Task = (taskParam: ITask) => {
     }
     function markTaskDone(id: string | number): void {
         let element = document.getElementById(checkId) as HTMLImageElement;
-        setTextClassName(!taskDone ? 'text-sm text-white p-2 line-through' : 'text-sm text-white p-2');
+        setTextClassName(!taskDone ? 'text-sm text-[#808080] p-2 line-through' : 'text-sm text-white p-2');
         setTaskDone(!taskDone);
         element.src = checkedDefault;
     }
