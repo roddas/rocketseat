@@ -58,7 +58,12 @@ export const Challenge = () => {
                         {
                             tasks.map(({ id, isDone, task, onDeleteTask }, index) => (
                                 <div className="flex justify-between mb-2 rounded-md bg-[#333333] p-2  border-[1px] border-solid  border-gray-500" key={index} >
-                                    <Task id={id} isDone={isDone} task={task} onDeleteTask={() => { deleteTask(id) }} />
+                                    <Task
+                                        id={id}
+                                        isDone={isDone}
+                                        task={task}
+                                        onDeleteTask={() => { deleteTask(id) }}
+                                    />
                                 </div>
                             ))
                         }
