@@ -10,7 +10,7 @@ import { ITask } from './TaskDataType';
 export const Task = (taskParam: ITask) => {
 
     const [textClassName, setTextClassName] = useState('text-sm text-white p-2');
-    const { isDone, task, id } = taskParam;
+    const { isDone, task, id, onDeleteTask } = taskParam;
     const checkId = `check${id}`;
     const deleteId = `delete${id}`;
 
@@ -42,23 +42,11 @@ export const Task = (taskParam: ITask) => {
         }
     }
 
-    function markListEvent(id: string, type: "check" | "recycle", isDone: boolean): void {
-        if (document) {
-            // const imageElement = document.getElementById(id) as HTMLImageElement;
-
-            // if (imageElement) {
-            //     imageElement.src = type === 'check' ? checkedDefault : deleteNoHover;
-            //     isDone = true;
-            // }
-            alert('Feito');
-        }
-    }
-
     return (
         <>
-            <img id={checkId} onClick={() => { markListEvent(checkId, "check", isDone) }} onMouseLeave={() => { mouseLeaveEvent(checkId, 'check', isDone) }} onMouseEnter={() => { mouseEnterEvent(checkId, 'check', isDone) }} src={uncheckedDefault} alt="" />
+            <img id={checkId} onClick={() => { }} onMouseLeave={() => { mouseLeaveEvent(checkId, 'check', isDone) }} onMouseEnter={() => { mouseEnterEvent(checkId, 'check', isDone) }} src={uncheckedDefault} alt="" />
             <span className={textClassName}>{task}</span>
-            <img id={deleteId} onMouseLeave={() => { mouseLeaveEvent(deleteId, 'recycle', isDone) }} onMouseEnter={() => { mouseEnterEvent(deleteId, 'recycle', isDone) }} src={deleteNoHover} alt="" />
+            <img id={deleteId} onClick={() => { onDeleteTask(id) }} onMouseLeave={() => { mouseLeaveEvent(deleteId, 'recycle', isDone) }} onMouseEnter={() => { mouseEnterEvent(deleteId, 'recycle', isDone) }} src={deleteNoHover} alt="" />
         </>
     );
 };

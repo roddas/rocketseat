@@ -8,20 +8,26 @@ export const Challenge = () => {
     const [tasks, setNewTask] = useState<ITask[]>([]);
     const [taskCounter, setTaskCounter] = useState<number>(0);
 
-    function addNewTask(event: FormEvent) {
+    function deleteTask(id: string | number): void {
+        const taskList = tasks.filter(elem => elem.id != id);
+        setNewTask(taskList);
+    }
 
-        const textInput = document.getElementById('task') as HTMLInputElement;
+    function addNewTask(event: FormEvent): void {
         event.preventDefault();
+        const textInput = document.getElementById('task') as HTMLInputElement;
         setTaskCounter(taskCounter + 1);
 
-        const newTask = {
-            id: taskCounter,
-            task: textInput.value,
-            isDone: false
-        } as ITask;
+        if (textInput.value.length) {
+            const newTask = {
+                id: taskCounter,
+                task: textInput.value,
+                isDone: false,
+            } as ITask;
 
-        textInput.value = '';
-        setNewTask([...tasks, newTask]);
+            textInput.value = '';
+            setNewTask([...tasks, newTask]);
+        }
     }
 
     return (
@@ -32,8 +38,8 @@ export const Challenge = () => {
             <div className="bg-[#1a1a1a] py-8  font-[Inter] h-[80vh]">
                 <section className="flex justify-center">
                     <form className="w-[50%] " method='post' action='#' onSubmit={(event: FormEvent) => { addNewTask(event) }}>
-                        <input type="text" name="task" id="task" placeholder="Adicione uma tarefa" className='p-3 w-[85%] mr-[2%] border-none bg-[#262626] rounded-md text-white' />
-                        <input type="button" onClick={addNewTask} value="Criar" className="py-2  w-[13%] bg-[#1E6F9f] hover:bg-[#4ea8de] text-white rounded-md" />
+                        <input type="text" name="task" id="task" placeholder="Adicione uma tarefa" className='p-3 w-[85%] mr-[2%] border-none bg-[#262626] rounded-md text-white' required />
+                        <input type="button" onClick={addNewTask} value="Criar" className="py-2  w-[13%] bg-[#1E6F9f] hover:bg-[#4ea8de] text-white rounded-md" required />
                     </form>
                 </section>
                 <section className="mx-auto w-[50%] mt-8">
@@ -50,9 +56,9 @@ export const Challenge = () => {
                     }
                     <div className="my-4">
                         {
-                            tasks.map((value, index) => (
+                            tasks.map(({ id, isDone, task, onDeleteTask }, index) => (
                                 <div className="flex justify-between mb-2 rounded-md bg-[#333333] p-2  border-[1px] border-solid  border-gray-500" key={index} >
-                                    <Task {...value} />
+                                    <Task id={id} isDone={isDone} task={task} onDeleteTask={() => { deleteTask(id) }} />
                                 </div>
                             ))
                         }
@@ -62,3 +68,4 @@ export const Challenge = () => {
         </>
     );
 }
+//
