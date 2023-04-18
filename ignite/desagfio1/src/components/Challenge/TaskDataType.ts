@@ -1,5 +1,6 @@
-interface ITask {
+export interface ITask {
   task: string;
+  id: string | number;
   isDone: boolean;
 }
 

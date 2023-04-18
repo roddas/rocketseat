@@ -5,62 +5,60 @@ import checkedDefault from './assets/img/checked.svg';
 import checkedHover from './assets/img/checked_hover.svg';
 import uncheckedDefault from './assets/img/unchecked.svg';
 import uncheckedHover from './assets/img/unchecked_hover.svg';
-import { TaskDataType } from './TaskDataType';
+import { ITask } from './TaskDataType';
 
-export const Task = (taskParam: TaskDataType) => {
+export const Task = (taskParam: ITask) => {
 
-    const { taskList } = taskParam;
     const [textClassName, setTextClassName] = useState('text-sm text-white p-2');
+    const { isDone, task, id } = taskParam;
+    const checkId = `check${id}`;
+    const deleteId = `delete${id}`;
 
-    function mouseEnterEvent(id: string, type: "check" | "recycle"): void {
+    function mouseEnterEvent(id: string, type: "check" | "recycle", isDone: boolean): void {
         if (document) {
             const imageElement = document.getElementById(id) as HTMLImageElement;
 
             if (imageElement) {
-                imageElement.src = type === 'check' ? uncheckedHover : deleteHover;
+                if (isDone) {
+                    imageElement.src = type === 'check' ? checkedHover : deleteHover;
+                } else {
+                    imageElement.src = type === 'check' ? uncheckedHover : deleteHover;
+                }
             }
         }
     }
 
-    function mouseLeaveEvent(id: string, type: "check" | "recycle"): void {
+    function mouseLeaveEvent(id: string, type: "check" | "recycle", isDone: boolean): void {
         if (document) {
             const imageElement = document.getElementById(id) as HTMLImageElement;
 
             if (imageElement) {
-                imageElement.src = type === 'check' ? uncheckedDefault : deleteNoHover;
+                if (isDone) {
+                    imageElement.src = type === 'check' ? checkedDefault : deleteNoHover;
+                } else {
+                    imageElement.src = type === 'check' ? uncheckedDefault : deleteNoHover;
+                }
             }
         }
     }
 
-    function markListEvent(id: string): void {
+    function markListEvent(id: string, type: "check" | "recycle", isDone: boolean): void {
         if (document) {
-            const imageElement = document.getElementById(id) as HTMLImageElement;
+            // const imageElement = document.getElementById(id) as HTMLImageElement;
 
-            if (imageElement) {
-                imageElement.src = checkedDefault;
-            }
+            // if (imageElement) {
+            //     imageElement.src = type === 'check' ? checkedDefault : deleteNoHover;
+            //     isDone = true;
+            // }
+            alert('Feito');
         }
     }
 
     return (
         <>
-            {
-                taskList.map(({ isDone, task }, index) => {
-                    const checkId = `check${index}`;
-                    const deleteId = `delete${index}`;
-
-                    return (
-                        <div className="flex justify-between mb-2 rounded-md bg-[#333333] p-2  border-[1px] border-solid  border-gray-500" key={index}>
-                            <img id={checkId} onMouseLeave={() => { mouseLeaveEvent(checkId, 'check') }} onMouseEnter={() => { mouseEnterEvent(checkId, 'check') }} src={uncheckedDefault} alt="" />
-                            <span className={textClassName}>{task}</span>
-                            <img id={deleteId} onMouseLeave={() => { mouseLeaveEvent(deleteId, 'recycle') }} onMouseEnter={() => { mouseEnterEvent(deleteId, 'recycle') }} src={deleteNoHover} alt="" />
-                        </div>
-                    )
-                })
-            }
-
+            <img id={checkId} onClick={() => { markListEvent(checkId, "check", isDone) }} onMouseLeave={() => { mouseLeaveEvent(checkId, 'check', isDone) }} onMouseEnter={() => { mouseEnterEvent(checkId, 'check', isDone) }} src={uncheckedDefault} alt="" />
+            <span className={textClassName}>{task}</span>
+            <img id={deleteId} onMouseLeave={() => { mouseLeaveEvent(deleteId, 'recycle', isDone) }} onMouseEnter={() => { mouseEnterEvent(deleteId, 'recycle', isDone) }} src={deleteNoHover} alt="" />
         </>
-
-
     );
 };
